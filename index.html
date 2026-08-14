@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HR Portal Pro</title>
+    <title>HR Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -57,7 +57,7 @@
             color: #2a4b6e;
             margin-bottom: 0.3rem;
         }
-        .form-group input, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 0.8rem 1rem;
             border: 1px solid #d8e1ec;
@@ -66,7 +66,7 @@
             background: #fafcfe;
             transition: 0.2s;
         }
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus {
             outline: none;
             border-color: #1a5fb0;
             box-shadow: 0 0 0 3px rgba(26,95,176,0.12);
@@ -97,25 +97,16 @@
             display: none;
         }
         .login-error.show { display: block; }
-        .login-hint {
+        .login-footer {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid #eef2f7;
             text-align: center;
-        }
-        .login-hint .secure-icon {
-            color: #1a5fb0;
-            font-size: 1.5rem;
-        }
-        .login-hint .title {
-            margin-top: 0.5rem;
-            color: #2a4b6e;
-            font-weight: 500;
-        }
-        .login-hint .subtitle {
-            font-size: 0.7rem;
             color: #6a8aa8;
-            margin-top: 0.3rem;
+            font-size: 0.75rem;
+        }
+        .login-footer i {
+            color: #1a5fb0;
         }
         .portal-hidden { display: none !important; }
         .portal { max-width: 1400px; width: 100%; }
@@ -402,7 +393,7 @@
 </head>
 <body>
 
-    <!-- ===== LOGIN PAGE ===== -->
+    <!-- ===== LOGIN PAGE - NO CREDENTIALS SHOWN ===== -->
     <div id="loginPage" class="login-wrapper">
         <div class="logo">
             <i class="fas fa-users-cog"></i>
@@ -428,15 +419,9 @@
             </button>
         </form>
 
-        <div class="login-hint">
-            <div>
-                <i class="fas fa-shield-alt secure-icon"></i>
-                <p class="title">Authorized Personnel Only</p>
-                <p class="subtitle">
-                    This system is for authorized users only.<br>
-                    Contact your administrator for access.
-                </p>
-            </div>
+        <!-- FOOTER - NO CREDENTIALS -->
+        <div class="login-footer">
+            <i class="fas fa-shield-alt"></i> Secure Access Only
         </div>
     </div>
 
@@ -457,22 +442,25 @@
             </div>
         </header>
 
-        <!-- USER MANAGEMENT -->
+        <!-- SUPER ADMIN: USER MANAGEMENT -->
         <div id="userManagementCard" class="card" style="display: none;">
             <div class="card-title">
                 <i class="fas fa-user-cog"></i> User Management
+                <span style="font-size: 0.6rem; font-weight: 400; color: #5e7b99; margin-left: 0.5rem;">
+                    (Super Admin only)
+                </span>
             </div>
             <form id="userForm" class="hr-form">
                 <div class="form-group">
-                    <label>New Username</label>
+                    <label><i class="fas fa-user"></i> New Username</label>
                     <input type="text" id="newUsername" placeholder="Choose username" required>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
+                    <label><i class="fas fa-lock"></i> Password</label>
                     <input type="text" id="newPassword" placeholder="Set password" required>
                 </div>
                 <div class="form-group">
-                    <label>Role</label>
+                    <label><i class="fas fa-user-tag"></i> Role</label>
                     <select id="newUserRole">
                         <option value="hr">HR</option>
                         <option value="viewer">Viewer</option>
@@ -480,10 +468,10 @@
                     </select>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-success"><i class="fas fa-user-plus"></i> Create</button>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-user-plus"></i> Create User</button>
                 </div>
             </form>
-            <div style="margin-top: 0.8rem;">
+            <div id="userListContainer" style="margin-top: 0.8rem;">
                 <div style="font-size: 0.75rem; font-weight: 600; color: #2a4b6e; margin-bottom: 0.3rem;">
                     <i class="fas fa-users"></i> Registered Users:
                 </div>
@@ -492,7 +480,7 @@
         </div>
 
         <!-- ADD / EDIT EMPLOYEE -->
-        <div class="card">
+        <div class="card" id="formCard">
             <div class="card-title">
                 <i class="fas fa-pen-alt"></i>
                 <span id="formTitle">Add employee</span>
@@ -501,28 +489,29 @@
 
             <form id="employeeForm" class="hr-form">
                 <input type="hidden" id="editId" value="">
+
                 <div class="form-group">
-                    <label>Full name</label>
+                    <label><i class="fas fa-user"></i> Full name</label>
                     <input type="text" id="empName" placeholder="e.g. Ayesha" required>
                 </div>
                 <div class="form-group">
-                    <label>Number</label>
+                    <label><i class="fas fa-phone"></i> Number</label>
                     <input type="text" id="empNumber" placeholder="03xx-xxxxxxx" required>
                 </div>
                 <div class="form-group">
-                    <label>CNIC</label>
+                    <label><i class="fas fa-id-card"></i> CNIC</label>
                     <input type="text" id="empCnic" placeholder="xxxxx-xxxxxxx-x" required>
                 </div>
                 <div class="form-group">
-                    <label>Company</label>
+                    <label><i class="fas fa-building"></i> Company</label>
                     <input type="text" id="empCompany" placeholder="Company name" required>
                 </div>
                 <div class="form-group">
-                    <label>Termination</label>
+                    <label><i class="fas fa-flag"></i> Termination</label>
                     <input type="text" id="empTermination" placeholder="reason">
                 </div>
                 <div class="form-group" style="flex: 2 1 180px;">
-                    <label>Notes (append)</label>
+                    <label><i class="fas fa-sticky-note"></i> Notes (append)</label>
                     <textarea id="empNotes" placeholder="Add notes..."></textarea>
                 </div>
                 <div class="form-actions">
@@ -533,16 +522,16 @@
             <div class="permission-hint"><i class="fas fa-info-circle"></i> Notes are appended when editing.</div>
         </div>
 
-        <!-- EMPLOYEE LIST -->
+        <!-- SEARCH & LIST -->
         <div class="card">
             <div class="card-title">
                 <i class="fas fa-list-ul"></i> Employees
                 <span style="margin-left: auto; font-weight: 400; font-size: 0.8rem; background: #e9f0f8; padding: 0.15rem 0.8rem; border-radius: 30px;" id="employeeCount">0</span>
             </div>
 
-            <div class="search-bar">
+            <div class="search-bar" style="margin-bottom: 1rem;">
                 <div class="form-group" style="flex: 3 1 180px;">
-                    <label>Search</label>
+                    <label><i class="fas fa-search"></i> Search</label>
                     <input type="text" id="searchInput" placeholder="Name, number, CNIC...">
                 </div>
                 <div class="search-actions">
@@ -560,7 +549,7 @@
                             <th>CNIC</th>
                             <th>Company</th>
                             <th>Termination</th>
-                            <th>Notes</th>
+                            <th style="min-width:100px;">Notes</th>
                             <th style="text-align: right;">Actions</th>
                         </tr>
                     </thead>
@@ -574,8 +563,34 @@
         </div>
     </div>
 
+    <!-- ===== PASSWORD CHANGE MODAL ===== -->
+    <div id="passwordModal" class="modal-overlay">
+        <div class="modal">
+            <h3><i class="fas fa-key"></i> Change Password</h3>
+            <form id="passwordChangeForm">
+                <div class="form-group">
+                    <label>User</label>
+                    <input type="text" id="modalUsername" readonly style="background: #f0f5fb;">
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" id="modalNewPassword" placeholder="Enter new password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="modalConfirmPassword" placeholder="Confirm new password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="modalCancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         (function() {
+            // ===== PERSISTENT STORAGE =====
             function getUsers() {
                 const stored = localStorage.getItem('hr_users');
                 if (stored) {
@@ -611,11 +626,38 @@
                 localStorage.setItem('hr_employees', JSON.stringify(employees));
             }
 
+            // ===== STATE =====
             let users = getUsers();
             let employees = getEmployees();
             let currentUser = null;
             let currentRole = null;
+            let isLoggedIn = false;
 
+            // ===== DOM REFS =====
+            const loginPage = document.getElementById('loginPage');
+            const mainPortal = document.getElementById('mainPortal');
+            const loginForm = document.getElementById('loginForm');
+            const loginError = document.getElementById('loginError');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const roleLabel = document.getElementById('roleLabel');
+            const userManagementCard = document.getElementById('userManagementCard');
+            const userForm = document.getElementById('userForm');
+            const newUsername = document.getElementById('newUsername');
+            const newPassword = document.getElementById('newPassword');
+            const newUserRole = document.getElementById('newUserRole');
+            const userList = document.getElementById('userList');
+
+            // Password modal
+            const passwordModal = document.getElementById('passwordModal');
+            const modalUsername = document.getElementById('modalUsername');
+            const modalNewPassword = document.getElementById('modalNewPassword');
+            const modalConfirmPassword = document.getElementById('modalConfirmPassword');
+            const passwordChangeForm = document.getElementById('passwordChangeForm');
+            const modalCancelBtn = document.getElementById('modalCancelBtn');
+
+            // ===== EMPLOYEE FUNCTIONS =====
             function generateId() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 5); }
 
             function renderTable(filterText = '') {
@@ -712,6 +754,7 @@
                 return d.innerHTML;
             }
 
+            // ===== EMPLOYEE FORM =====
             const form = document.getElementById('employeeForm');
             const nameInput = document.getElementById('empName');
             const numberInput = document.getElementById('empNumber');
@@ -742,6 +785,7 @@
                 editIdInput.value = emp.id;
                 submitBtn.innerHTML = '<i class="fas fa-pen"></i> Update';
                 formTitle.textContent = 'Edit employee';
+                document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
             form.addEventListener('submit', function(e) {
@@ -797,6 +841,7 @@
 
             clearBtn.addEventListener('click', clearForm);
 
+            // ===== SEARCH =====
             const searchInput = document.getElementById('searchInput');
             const searchBtn = document.getElementById('searchBtn');
             const resetSearchBtn = document.getElementById('resetSearchBtn');
@@ -814,6 +859,7 @@
                 if (e.key === 'Enter') performSearch();
             });
 
+            // ===== USER MANAGEMENT =====
             function renderUserList() {
                 const users = getUsers();
                 let html = '';
@@ -821,18 +867,27 @@
                     const user = users[username];
                     const roleIcon = user.role === 'superadmin' ? '👑' : user.role === 'hr' ? '👔' : '👁️';
                     const roleLabel = user.role === 'superadmin' ? 'Super Admin' : user.role === 'hr' ? 'HR' : 'Viewer';
+                    const hiddenUsername = username.charAt(0) + '*'.repeat(Math.min(username.length - 1, 6));
                     html += `
                         <div class="user-tag">
                             <span>${roleIcon}</span>
-                            <strong>${username}</strong>
+                            <span class="username-hidden" title="${username}">${hiddenUsername}</span>
                             <span class="role-tag">${roleLabel}</span>
                             <span class="user-actions">
+                                <button class="edit-pw" data-username="${username}" title="Change password"><i class="fas fa-key"></i></button>
                                 ${username !== 'admin' ? `<button class="delete-user" data-username="${username}" title="Delete user"><i class="fas fa-times-circle"></i></button>` : ''}
                             </span>
                         </div>
                     `;
                 });
-                document.getElementById('userList').innerHTML = html;
+                userList.innerHTML = html;
+
+                document.querySelectorAll('.edit-pw').forEach(el => {
+                    el.addEventListener('click', function() {
+                        const username = this.dataset.username;
+                        openPasswordModal(username);
+                    });
+                });
 
                 document.querySelectorAll('.delete-user').forEach(el => {
                     el.addEventListener('click', function() {
@@ -851,15 +906,60 @@
                 });
             }
 
-            const loginForm = document.getElementById('loginForm');
-            const loginError = document.getElementById('loginError');
-            const usernameInput = document.getElementById('username');
-            const passwordInput = document.getElementById('password');
-            const loginPage = document.getElementById('loginPage');
-            const mainPortal = document.getElementById('mainPortal');
-            const roleLabel = document.getElementById('roleLabel');
-            const userManagementCard = document.getElementById('userManagementCard');
+            // ===== PASSWORD MODAL =====
+            function openPasswordModal(username) {
+                modalUsername.value = 'User: ' + username.charAt(0) + '*'.repeat(Math.min(username.length - 1, 6));
+                modalUsername.dataset.username = username;
+                modalNewPassword.value = '';
+                modalConfirmPassword.value = '';
+                passwordModal.classList.add('active');
+            }
 
+            function closePasswordModal() {
+                passwordModal.classList.remove('active');
+            }
+
+            modalCancelBtn.addEventListener('click', closePasswordModal);
+            passwordModal.addEventListener('click', function(e) {
+                if (e.target === this) closePasswordModal();
+            });
+
+            passwordChangeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = modalUsername.dataset.username;
+                const newPass = modalNewPassword.value.trim();
+                const confirmPass = modalConfirmPassword.value.trim();
+
+                if (!newPass || newPass.length < 4) {
+                    alert('Password must be at least 4 characters.');
+                    return;
+                }
+
+                if (newPass !== confirmPass) {
+                    alert('Passwords do not match.');
+                    return;
+                }
+
+                const users = getUsers();
+                if (!users[username]) {
+                    alert('User not found.');
+                    return;
+                }
+
+                users[username].password = newPass;
+                saveUsers(users);
+
+                if (currentUser === username) {
+                    alert('Your password has been updated! Please login again.');
+                    logout();
+                } else {
+                    alert('Password updated successfully!');
+                    closePasswordModal();
+                    renderUserList();
+                }
+            });
+
+            // ===== LOGIN =====
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const username = usernameInput.value.trim();
@@ -872,6 +972,7 @@
                     loginError.classList.remove('show');
                     currentUser = username;
                     currentRole = user.role;
+                    isLoggedIn = true;
                     showPortal();
                 } else {
                     loginError.classList.add('show');
@@ -909,7 +1010,9 @@
                 renderTable(searchInput.value);
             }
 
+            // ===== LOGOUT =====
             function logout() {
+                isLoggedIn = false;
                 currentUser = null;
                 currentRole = null;
                 mainPortal.classList.add('portal-hidden');
@@ -917,12 +1020,15 @@
                 usernameInput.value = '';
                 passwordInput.value = '';
                 loginError.classList.remove('show');
+                closePasswordModal();
             }
 
-            document.getElementById('logoutBtn').addEventListener('click', logout);
+            logoutBtn.addEventListener('click', logout);
 
+            // ===== INIT =====
             loginPage.style.display = 'block';
             mainPortal.classList.add('portal-hidden');
+
             console.log('HR Portal ready!');
         })();
     </script>
