@@ -1,0 +1,14 @@
+{
+  "name": "hr-portal",
+  "version": "1.0.0",
+  "description": "HR Portal - Employee Management System",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Static site'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}
