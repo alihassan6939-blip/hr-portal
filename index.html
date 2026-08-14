@@ -101,18 +101,21 @@
             margin-top: 1.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid #eef2f7;
-            font-size: 0.8rem;
-            color: #6a8aa8;
             text-align: center;
         }
-        .login-hint .cred-row {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            padding: 0.3rem 0;
-            font-family: monospace;
-            font-size: 0.85rem;
-            color: #4c6a85;
+        .login-hint .secure-icon {
+            color: #1a5fb0;
+            font-size: 1.5rem;
+        }
+        .login-hint .title {
+            margin-top: 0.5rem;
+            color: #2a4b6e;
+            font-weight: 500;
+        }
+        .login-hint .subtitle {
+            font-size: 0.7rem;
+            color: #6a8aa8;
+            margin-top: 0.3rem;
         }
         .portal-hidden { display: none !important; }
         .portal { max-width: 1400px; width: 100%; }
@@ -394,7 +397,6 @@
             table { font-size: 0.75rem; }
             th, td { padding: 0.4rem 0.5rem; }
             .notes-cell { max-width: 100px; }
-            .login-hint .cred-row { flex-direction: column; gap: 0.2rem; }
         }
     </style>
 </head>
@@ -427,14 +429,13 @@
         </form>
 
         <div class="login-hint">
-            <p style="margin-bottom: 0.5rem;"><strong>Default Credentials:</strong></p>
-            <div class="cred-row">
-                <span><i class="fas fa-crown" style="color:#f59e0b;"></i> Super Admin</span>
-                <span>admin / admin123</span>
-            </div>
-            <div class="cred-row">
-                <span><i class="fas fa-user-tie" style="color:#1a5fb0;"></i> HR</span>
-                <span>hr / hr123</span>
+            <div>
+                <i class="fas fa-shield-alt secure-icon"></i>
+                <p class="title">Authorized Personnel Only</p>
+                <p class="subtitle">
+                    This system is for authorized users only.<br>
+                    Contact your administrator for access.
+                </p>
             </div>
         </div>
     </div>
@@ -922,7 +923,7 @@
 
             loginPage.style.display = 'block';
             mainPortal.classList.add('portal-hidden');
-            console.log('HR Portal ready! Login: admin / admin123');
+            console.log('HR Portal ready!');
         })();
     </script>
 </body>
